@@ -19,12 +19,32 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-typedef struct s_time_info
+typedef struct s_data
 {
-	struct timeval	*t;
-	struct timezone	*t_zone;
-	struct tm		*today;
-}t_time_inf;
+	int nb_of_philo;
+	int	time_to_die;
+	int	time_to_eat;
+	int	time_to_sleep;
+	int	meals_to_eat;
+	int	meals_eaten;
+	long	start;
+	int	death_lock;
+	struct s_philo *philo;
+	pthread_mutex_t status;
+}t_data;
+
+typdef struct s_philo
+{
+	pthread_t		thread_id;
+	int				id;
+	int				meals;
+	long			last_meal;
+	pthread_mutex_t	fork;
+	t_data			*data;
+};
+
+
+
 
 typedef struct s_philo
 {
