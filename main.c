@@ -6,7 +6,7 @@
 /*   By: mjeyavat <mjeyavat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 16:48:16 by mjeyavat          #+#    #+#             */
-/*   Updated: 2022/01/20 20:34:17 by mjeyavat         ###   ########.fr       */
+/*   Updated: 2022/01/20 21:00:42 by mjeyavat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,9 @@ int	hndl_input(char *argv[], int argc, t_data *data)
 	data->time_to_eat = (int)ft_l_atoi(argv[3]);
 	data->time_to_sleep = (int)ft_l_atoi(argv[4]);
 	data->meals_to_eat = (int)ft_l_atoi(argv[5]);;
+	data->death_lock = 0;
+	data->meals_eaten = 0;
+	data->start = 0;
 	return (0);
 }
 
