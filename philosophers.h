@@ -6,7 +6,7 @@
 /*   By: mjeyavat <mjeyavat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 15:30:06 by mjeyavat          #+#    #+#             */
-/*   Updated: 2022/01/18 20:39:58 by mjeyavat         ###   ########.fr       */
+/*   Updated: 2022/01/20 20:09:39 by mjeyavat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,25 +19,33 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-typedef struct s_time_info
+typedef struct s_data
 {
-	struct timeval	*t;
-	struct timezone	*t_zone;
-	struct tm		*today;
-}t_time_inf;
+	int				nb_of_phil;
+	int				time_to_eat;
+	int				meals_eaten;
+	int				meals_to_eat;
+	long			start;
+	int				time_to_die;
+	int				time_to_sleep;
+	int				death_lock;
+	int				num_of_philo;
+	struct s_philo	*philo;
+	pthread_mutex_t	status;
+}t_data;
 
-typedef struct s_philo
+struct	s_philo
 {
-	int				position;
-	int				is_dead;
-	int				is_sleep;
-	int				is_eating;
-	pthread_t		thread;
-	int				status;
-	pthread_mutex_t	print_status;
-	
-}t_philo;
+	int				id;
+	pthread_t		thread_id;
+	int				meals;
+	int				last_meal;
+	pthread_mutex_t	fork;
+	t_data			*data;
+};
 
-void	time_in_ms(t_time_inf ti);
+long	ft_l_atoi(const char *str);
+int		creat_data(t_data *data);
+int		timestamp(void);
 
 #endif

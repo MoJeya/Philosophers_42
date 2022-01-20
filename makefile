@@ -1,6 +1,6 @@
 NAME = philo
 
-FILES = main.c ft_time_in_ms.c \
+FILES = main.c ./utils/ft_atoi.c ./utils/time_stamp.c ./utils/routine_tools.c \
 
 CFLAGS = -Wall -Wextra -Werror 
 
