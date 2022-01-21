@@ -6,7 +6,7 @@
 /*   By: mjeyavat <mjeyavat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 15:30:06 by mjeyavat          #+#    #+#             */
-/*   Updated: 2022/01/20 20:34:04 by mjeyavat         ###   ########.fr       */
+/*   Updated: 2022/01/21 15:12:01 by mjeyavat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,9 @@ struct	s_philo
 	t_data			*data;
 };
 
-long	ft_l_atoi(const char *str);
-int		creat_data(t_data *data);
-int		timestamp(void);
+int			ft_l_atoi(const char *str);
+int			creat_data(t_data *data);
+int64_t		timestamp(void);
+int64_t		ft_timepass(struct s_philo philo);
 
 #endif

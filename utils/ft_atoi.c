@@ -6,17 +6,17 @@
 /*   By: mjeyavat <mjeyavat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 16:52:57 by mjeyavat          #+#    #+#             */
-/*   Updated: 2022/01/20 20:33:59 by mjeyavat         ###   ########.fr       */
+/*   Updated: 2022/01/21 13:35:14 by mjeyavat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philosophers.h"
 
-long	ft_l_atoi(const char *str)
+int	ft_l_atoi(const char *str)
 {
-	long	i;
-	long	result;
-	long	negativ;
+	int	i;
+	int	result;
+	int	negativ;
 
 	result = 0;
 	negativ = 1;

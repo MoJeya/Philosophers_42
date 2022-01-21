@@ -6,7 +6,7 @@
 /*   By: mjeyavat <mjeyavat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 16:48:16 by mjeyavat          #+#    #+#             */
-/*   Updated: 2022/01/20 21:00:42 by mjeyavat         ###   ########.fr       */
+/*   Updated: 2022/01/21 15:42:15 by mjeyavat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,15 @@ int	init_data(t_data *data)
 	int				time;
 
 	time = timestamp();
-	cnt = 1;
+	cnt = 0;
 	pthread_mutex_init(&data->status, NULL);
-	data->philo = malloc(data->nb_of_phil * sizeof(struct s_philo));
+	data->philo = calloc(data->nb_of_phil * sizeof(struct s_philo), 1);
 	while (cnt < data->nb_of_phil)
 	{
-		data->philo[cnt].id = cnt;
+		data->philo[cnt].id = cnt+1;
 		data->philo[cnt].meals = 0;
 		data->philo[cnt].last_meal = time;
+		data->philo[cnt].data = data;
 		pthread_mutex_init(&data->philo[cnt].fork, NULL);
 		cnt++;
 	}
@@ -69,7 +70,7 @@ int	main(int argc, char *argv[])
 	t_data	*data;
 	int		i;
 
-	data = (t_data *)malloc(sizeof(t_data));
+	data = (t_data *)calloc(sizeof(t_data), 1);
 	if (!data)
 		return (1);
 	i = 0;
@@ -77,6 +78,9 @@ int	main(int argc, char *argv[])
 	{
 		init_data(data);
 		creat_data(data);
+	} else {
+		return (1);
 	}
+	pthread_mutex_destroy(&data->status);
 	return (0);
 }
