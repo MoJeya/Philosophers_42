@@ -6,7 +6,7 @@
 /*   By: mjeyavat <mjeyavat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 15:30:06 by mjeyavat          #+#    #+#             */
-/*   Updated: 2022/01/18 20:39:58 by mjeyavat         ###   ########.fr       */
+/*   Updated: 2022/01/21 15:12:01 by mjeyavat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,43 +21,32 @@
 
 typedef struct s_data
 {
-	int nb_of_philo;
-	int	time_to_die;
-	int	time_to_eat;
-	int	time_to_sleep;
-	int	meals_to_eat;
-	int	meals_eaten;
-	long	start;
-	int	death_lock;
-	struct s_philo *philo;
-	pthread_mutex_t status;
+	int				nb_of_phil;
+	int				time_to_eat;
+	int				meals_eaten;
+	int				meals_to_eat;
+	long			start;
+	int				time_to_die;
+	int				time_to_sleep;
+	int				death_lock;
+	int				num_of_philo;
+	struct s_philo	*philo;
+	pthread_mutex_t	status;
 }t_data;
 
-typdef struct s_philo
+struct	s_philo
 {
-	pthread_t		thread_id;
 	int				id;
+	pthread_t		thread_id;
 	int				meals;
-	long			last_meal;
+	int				last_meal;
 	pthread_mutex_t	fork;
 	t_data			*data;
 };
 
-
-
-
-typedef struct s_philo
-{
-	int				position;
-	int				is_dead;
-	int				is_sleep;
-	int				is_eating;
-	pthread_t		thread;
-	int				status;
-	pthread_mutex_t	print_status;
-	
-}t_philo;
-
-void	time_in_ms(t_time_inf ti);
+int			ft_l_atoi(const char *str);
+int			creat_data(t_data *data);
+int64_t		timestamp(void);
+int64_t		ft_timepass(struct s_philo philo);
 
 #endif
