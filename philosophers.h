@@ -6,7 +6,7 @@
 /*   By: mjeyavat <mjeyavat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 15:30:06 by mjeyavat          #+#    #+#             */
-/*   Updated: 2022/01/21 15:12:01 by mjeyavat         ###   ########.fr       */
+/*   Updated: 2022/01/24 01:18:16 by mjeyavat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ typedef struct s_data
 	long			start;
 	int				time_to_die;
 	int				time_to_sleep;
-	int				death_lock;
+	int				is_dead;
 	int				num_of_philo;
 	struct s_philo	*philo;
 	pthread_mutex_t	status;
@@ -44,9 +44,14 @@ struct	s_philo
 	t_data			*data;
 };
 
-int			ft_l_atoi(const char *str);
-int			creat_data(t_data *data);
-int64_t		timestamp(void);
-int64_t		ft_timepass(struct s_philo philo);
+int				ft_l_atoi(const char *str);
+void			*routine(void *arg);
+int				creat_data(t_data *data);
+int				join_threads(t_data *data);
+long			timestamp(void);
+int				check_death(t_data *data);
+void			ft_ms_sleep(useconds_t time_ms);
+void			print_message(t_data *data, char *status, int id);
+void			free_thread(t_data *data);
 
 #endif
