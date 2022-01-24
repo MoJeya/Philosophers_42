@@ -1,33 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   time_stamp.c                                       :+:      :+:    :+:   */
+/*   free_thread.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mjeyavat <mjeyavat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/20 17:26:54 by mjeyavat          #+#    #+#             */
-/*   Updated: 2022/01/21 13:49:31 by mjeyavat         ###   ########.fr       */
+/*   Created: 2022/01/24 00:26:12 by mjeyavat          #+#    #+#             */
+/*   Updated: 2022/01/24 14:36:38 by mjeyavat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philosophers.h"
 
-int64_t	timestamp(void)
+void	free_thread(t_data *data)
 {
-	struct timeval	tv;
+	int	i;
 
-	gettimeofday(&tv, NULL);
-	return (tv.tv_sec * 1000 * 1000 + tv.tv_usec);
-}
-
-int64_t	ft_timepass(struct s_philo philo)
-{
-	printf("1\n");
-
-	int64_t	timeafter;
-	int64_t	timestart;
-
-	timestart = philo.last_meal;
-	timeafter = timestart - timestamp();
-	return (timeafter);
+	i = 0;
+	while (i < data->nb_of_phil)
+	{
+		pthread_mutex_destroy(&data->philo[i].fork);
+		i++;
+	}
+	pthread_mutex_destroy(&data->status);
+	free(data->philo);
 }

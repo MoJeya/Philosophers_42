@@ -6,79 +6,86 @@
 /*   By: mjeyavat <mjeyavat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 17:51:32 by mjeyavat          #+#    #+#             */
-/*   Updated: 2022/01/21 16:44:06 by mjeyavat         ###   ########.fr       */
+/*   Updated: 2022/01/24 14:43:46 by mjeyavat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philosophers.h"
 
-void	*eat(int id, t_data *data)
+void	eat(int id, t_data *data)
 {
-	pthread_mutex_lock(&data->philo[id].fork);
-	pthread_mutex_lock(&data->philo[(id + 1) % id].fork);
-	printf("Philosopher %d is eating\n", id);
-	usleep(3000);
-	pthread_mutex_unlock(&data->philo[id].fork);
-	pthread_mutex_unlock(&data->philo[(id + 1) % id].fork);
-	printf("Philosopher %d has finisched eating!\n", id);
-	data->meals_eaten++;
+	int	max_phil;
+
+	max_phil = data->nb_of_phil;
+	if (id % 2)
+	{
+		pthread_mutex_lock(&data->philo[id].fork);
+		print_message(data, "has taken a fork", id);
+		if (((id + 1) % max_phil) == 0)
+			pthread_mutex_lock(&data->philo[(id + 1)].fork);
+		else
+			pthread_mutex_lock(&data->philo[(id + 1) % max_phil].fork);
+		print_message(data, "has taken a fork", id);
+	}
+	else
+	{
+		if (((id + 1 ) % max_phil) == 0)
+			pthread_mutex_lock(&data->philo[id + 1].fork);
+		else
+			pthread_mutex_lock(&data->philo[(id + 1) % max_phil].fork);
+		print_message(data, "has taken a fork", id);
+		pthread_mutex_lock(&data->philo[id].fork);
+		print_message(data, "has taken a fork", id);
+	}
 	data->philo[id].last_meal = timestamp();
+	print_message(data, "is eating", id);
+	ft_ms_sleep(data->time_to_eat * 1000);
+	pthread_mutex_unlock(&data->philo[id].fork);
+	pthread_mutex_unlock(&data->philo[(id + 1) % max_phil].fork);
 	data->philo[id].meals++;
-	return (NULL);
 }
 
-// int	check_if_dead(t_data *data, int id)
-// {
-// 	int	bol;
+void	take_nap(t_data *data, int id)
+{
+	print_message(data, "is sleeping", id);
+	ft_ms_sleep(data->time_to_sleep * 1000);
+}
 
-// 	bol = ft_timepass(data->philo[id]);
-// 	printf("time is running %lu\n", (long)bol);
-// 	return (bol);
-// }
+void	think(t_data *data, int id)
+{
+	print_message(data, "is thinking", id);
+}
 
 void	*routine(void *arg)
 {
 	struct s_philo	*philo;
 
 	philo = (struct s_philo *)arg;
-	// printf("%d is going to eat\n", philo->id);
-	// printf("philo %d last meal: %d\n", philo->id, philo->meals);
-	//check_if_dead(philo->data, philo->id);
-	while (philo->data->meals_eaten < philo->data->meals_to_eat)
+	if (philo->id % 2)
+		ft_ms_sleep(1);
+	while (philo->data->meals_to_eat == -1
+		|| (philo->meals < philo->data->meals_to_eat
+			&& philo->data->is_dead == 0))
 	{
 		eat(philo->id, philo->data);
+		take_nap(philo->data, philo->id);
+		think(philo->data, philo->id);
 	}
-	
 	return (NULL);
 }
 
 int	creat_data(t_data *data)
 {
 	int				cnt;
-	//struct s_philo	philo;
 
-	//philo = (struct s_philo){ 0 };
 	cnt = 0;
+	data->start = timestamp();
 	while (cnt < data->nb_of_phil)
 	{
-		//philo = data->philo[cnt];
-		if (pthread_create(&data->philo[cnt].thread_id, NULL, &routine, data->philo + cnt) != 0)
+		data->philo[cnt].data = data;
+		if (pthread_create(&data->philo[cnt].thread_id, NULL, &routine,
+				&data->philo[cnt]) != 0)
 			return (1);
-		cnt++;
-	}
-	cnt = 0;
-	while (cnt < data->nb_of_phil)
-	{
-		//philo = data->philo[cnt];
-		if (pthread_join(data->philo[cnt].thread_id, NULL) != 0)
-			return (0);
-		cnt++;
-	}
-	cnt = 0;
-	while (cnt < data->nb_of_phil)
-	{
-		//philo = data->philo[cnt];
-		pthread_mutex_destroy(&data->philo[cnt].fork);
 		cnt++;
 	}
 	return (0);
