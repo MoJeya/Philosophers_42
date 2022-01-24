@@ -6,7 +6,7 @@
 /*   By: mjeyavat <mjeyavat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 17:51:32 by mjeyavat          #+#    #+#             */
-/*   Updated: 2022/01/24 01:46:30 by mjeyavat         ###   ########.fr       */
+/*   Updated: 2022/01/24 14:43:46 by mjeyavat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,18 @@ void	eat(int id, t_data *data)
 	{
 		pthread_mutex_lock(&data->philo[id].fork);
 		print_message(data, "has taken a fork", id);
-		pthread_mutex_lock(&data->philo[(id + 1) % max_phil].fork);
+		if (((id + 1) % max_phil) == 0)
+			pthread_mutex_lock(&data->philo[(id + 1)].fork);
+		else
+			pthread_mutex_lock(&data->philo[(id + 1) % max_phil].fork);
 		print_message(data, "has taken a fork", id);
 	}
 	else
 	{
-		pthread_mutex_lock(&data->philo[(id + 1) % max_phil].fork);
+		if (((id + 1 ) % max_phil) == 0)
+			pthread_mutex_lock(&data->philo[id + 1].fork);
+		else
+			pthread_mutex_lock(&data->philo[(id + 1) % max_phil].fork);
 		print_message(data, "has taken a fork", id);
 		pthread_mutex_lock(&data->philo[id].fork);
 		print_message(data, "has taken a fork", id);
@@ -57,7 +63,9 @@ void	*routine(void *arg)
 	philo = (struct s_philo *)arg;
 	if (philo->id % 2)
 		ft_ms_sleep(1);
-	while (philo->meals < philo->data->meals_to_eat)
+	while (philo->data->meals_to_eat == -1
+		|| (philo->meals < philo->data->meals_to_eat
+			&& philo->data->is_dead == 0))
 	{
 		eat(philo->id, philo->data);
 		take_nap(philo->data, philo->id);
@@ -82,4 +90,3 @@ int	creat_data(t_data *data)
 	}
 	return (0);
 }
-

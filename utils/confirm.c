@@ -6,7 +6,7 @@
 /*   By: mjeyavat <mjeyavat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 22:47:01 by mjeyavat          #+#    #+#             */
-/*   Updated: 2022/01/24 01:46:36 by mjeyavat         ###   ########.fr       */
+/*   Updated: 2022/01/24 14:59:27 by mjeyavat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,31 +18,11 @@ void	kill_all(t_data *data, int id)
 
 	pthread_mutex_lock(&data->status);
 	data->is_dead = 1;
-	printf("%li %i died\n",(timestamp() - data->start) / 1000, id + 1);
+	printf("%li %i died\n",(timestamp() - data->start) / 1000, id);
 	usleep(1000);
 	i = 0;
 	while (i < data->nb_of_phil)
 		pthread_detach(data->philo[i++].thread_id);
-}
-
-int	all_eatin(t_data *data, int id)
-{
-	int	j;
-
-	j = 0;
-	if (data->philo[id].meals == data->meals_to_eat)
-		data->meals_eaten++;
-	if (data->meals_eaten == data->meals_to_eat)
-	{
-		printf("meals where eatn!\n");
-		while (j < data->nb_of_phil)
-		{
-			pthread_detach(data->philo[j].thread_id);
-			j++;
-		}	
-		return (0);
-	}
-	return (1);
 }
 
 void	*death_rountine(void *arg)
@@ -60,8 +40,6 @@ void	*death_rountine(void *arg)
 			kill_all(data, i);
 			return (0);
 		}
-		if (!all_eatin(data, i))
-			return (0);
 		if (i == data->nb_of_phil)
 			i = 0;
 		i++;
