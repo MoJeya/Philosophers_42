@@ -6,7 +6,7 @@
 /*   By: mjeyavat <mjeyavat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 22:47:01 by mjeyavat          #+#    #+#             */
-/*   Updated: 2022/01/27 17:30:17 by mjeyavat         ###   ########.fr       */
+/*   Updated: 2022/01/27 18:47:42 by mjeyavat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,12 @@ void	*death_loop(void *arg)
 	i = 0;
 	while (1)
 	{
-		if (data->philo[i].last_meal > 1 && (timestamp() - data->philo[i].last_meal)
+		if (data->philo[i].last_meal > 0.1
+			&& (timestamp() - data->philo[i].last_meal)
 			> data->time_to_die)
 		{
 			data->is_dead = 1;
-			if(kill_all(data, i) != 1)
+			if (kill_all(data, i) != 1)
 				return (0);
 		}	
 		if (all_eaten(data, i) != 1)
@@ -65,6 +66,7 @@ void	*death_loop(void *arg)
 int	check_death(t_data *data)
 {
 	pthread_t	id;
+
 	if (pthread_create(&id, NULL, &death_loop, data) != 0)
 		return (1);
 	pthread_join(id, NULL);
