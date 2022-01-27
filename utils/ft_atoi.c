@@ -6,13 +6,13 @@
 /*   By: mjeyavat <mjeyavat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 16:52:57 by mjeyavat          #+#    #+#             */
-/*   Updated: 2022/01/24 01:46:33 by mjeyavat         ###   ########.fr       */
+/*   Updated: 2022/01/26 21:04:49 by mjeyavat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philosophers.h"
 
-int	ft_l_atoi(const char *str)
+int	ft_atoi(const char *str)
 {
 	int	i;
 	int	result;
