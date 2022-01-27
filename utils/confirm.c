@@ -6,26 +6,35 @@
 /*   By: mjeyavat <mjeyavat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 22:47:01 by mjeyavat          #+#    #+#             */
-/*   Updated: 2022/01/24 14:59:27 by mjeyavat         ###   ########.fr       */
+/*   Updated: 2022/01/27 17:30:17 by mjeyavat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philosophers.h"
 
-void	kill_all(t_data *data, int id)
+int	kill_all(t_data *data, int id)
 {
-	int	i;
-
-	pthread_mutex_lock(&data->status);
 	data->is_dead = 1;
-	printf("%li %i died\n",(timestamp() - data->start) / 1000, id);
+	print_message(data, "is Dead!", id);
 	usleep(1000);
-	i = 0;
-	while (i < data->nb_of_phil)
-		pthread_detach(data->philo[i++].thread_id);
+	return (0);
 }
 
-void	*death_rountine(void *arg)
+int	all_eaten(t_data *data, int id)
+{
+	if (data->philo[id].meals == data->meals_to_eat)
+		data->meals_eaten++;
+	if (data->meals_eaten == data->meals_to_eat)
+	{
+		data->is_running = 1;
+		print_message(data, "Everyone has eaten!", id);
+		usleep(100);
+		return (0);
+	}
+	return (1);
+}
+
+void	*death_loop(void *arg)
 {
 	t_data	*data;
 	int		i;
@@ -34,10 +43,16 @@ void	*death_rountine(void *arg)
 	i = 0;
 	while (1)
 	{
-		if (((timestamp() - data->philo[i].last_meal) / 1000)
-			> (long)data->time_to_die)
+		if (data->philo[i].last_meal > 1 && (timestamp() - data->philo[i].last_meal)
+			> data->time_to_die)
 		{
-			kill_all(data, i);
+			data->is_dead = 1;
+			if(kill_all(data, i) != 1)
+				return (0);
+		}	
+		if (all_eaten(data, i) != 1)
+		{	
+			data->is_running = 1;
 			return (0);
 		}
 		if (i == data->nb_of_phil)
@@ -50,8 +65,7 @@ void	*death_rountine(void *arg)
 int	check_death(t_data *data)
 {
 	pthread_t	id;
-
-	if (pthread_create(&id, NULL, &death_rountine, data) != 0)
+	if (pthread_create(&id, NULL, &death_loop, data) != 0)
 		return (1);
 	pthread_join(id, NULL);
 	return (0);

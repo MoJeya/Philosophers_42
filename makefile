@@ -1,6 +1,6 @@
 NAME = philo
 
-FILES = main.c ./utils/ft_atoi.c ./utils/tools.c ./utils/routine_tools.c ./utils/confirm.c ./utils/free_thread.c \
+FILES = main.c ./utils/ft_atoi.c ./utils/tools.c ./utils/routine_tools.c ./utils/confirm.c ./utils/free_thread.c ./utils/ft_jointhreads.c\
 
 CFLAGS = -Wall -Wextra -Werror 
 

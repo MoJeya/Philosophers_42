@@ -6,7 +6,7 @@
 /*   By: mjeyavat <mjeyavat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 17:51:32 by mjeyavat          #+#    #+#             */
-/*   Updated: 2022/01/24 14:43:46 by mjeyavat         ###   ########.fr       */
+/*   Updated: 2022/01/27 17:17:52 by mjeyavat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,34 +21,28 @@ void	eat(int id, t_data *data)
 	{
 		pthread_mutex_lock(&data->philo[id].fork);
 		print_message(data, "has taken a fork", id);
-		if (((id + 1) % max_phil) == 0)
-			pthread_mutex_lock(&data->philo[(id + 1)].fork);
-		else
-			pthread_mutex_lock(&data->philo[(id + 1) % max_phil].fork);
+		pthread_mutex_lock(&data->philo[(id + 1) % max_phil].fork);
 		print_message(data, "has taken a fork", id);
 	}
 	else
 	{
-		if (((id + 1 ) % max_phil) == 0)
-			pthread_mutex_lock(&data->philo[id + 1].fork);
-		else
-			pthread_mutex_lock(&data->philo[(id + 1) % max_phil].fork);
+		pthread_mutex_lock(&data->philo[(id + 1) % max_phil].fork);
 		print_message(data, "has taken a fork", id);
 		pthread_mutex_lock(&data->philo[id].fork);
 		print_message(data, "has taken a fork", id);
 	}
 	data->philo[id].last_meal = timestamp();
+	data->philo[id].meals++;
 	print_message(data, "is eating", id);
-	ft_ms_sleep(data->time_to_eat * 1000);
+	ft_ms_sleep(data->time_to_eat);
 	pthread_mutex_unlock(&data->philo[id].fork);
 	pthread_mutex_unlock(&data->philo[(id + 1) % max_phil].fork);
-	data->philo[id].meals++;
 }
 
 void	take_nap(t_data *data, int id)
 {
+	ft_ms_sleep(data->time_to_sleep);
 	print_message(data, "is sleeping", id);
-	ft_ms_sleep(data->time_to_sleep * 1000);
 }
 
 void	think(t_data *data, int id)
@@ -61,11 +55,19 @@ void	*routine(void *arg)
 	struct s_philo	*philo;
 
 	philo = (struct s_philo *)arg;
+	while (1)
+	{
+		if (philo->data->init_cnt == philo->data->nb_of_phil)
+			break ;
+	}
 	if (philo->id % 2)
-		ft_ms_sleep(1);
-	while (philo->data->meals_to_eat == -1
-		|| (philo->meals < philo->data->meals_to_eat
-			&& philo->data->is_dead == 0))
+		usleep(50);
+	philo->data->start = timestamp();
+	philo->last_meal = timestamp();
+	while ((philo->data->meals_to_eat == -1
+			|| philo->meals < philo->data->meals_to_eat)
+				&& philo->data->is_dead == 0
+						&& philo->data->is_running == 0)
 	{
 		eat(philo->id, philo->data);
 		take_nap(philo->data, philo->id);
@@ -76,17 +78,15 @@ void	*routine(void *arg)
 
 int	creat_data(t_data *data)
 {
-	int				cnt;
-
-	cnt = 0;
-	data->start = timestamp();
-	while (cnt < data->nb_of_phil)
+	data->init_cnt = 0;
+	while (data->init_cnt < data->nb_of_phil)
 	{
-		data->philo[cnt].data = data;
-		if (pthread_create(&data->philo[cnt].thread_id, NULL, &routine,
-				&data->philo[cnt]) != 0)
+		data->philo[data->init_cnt].data = data;
+		if (pthread_create(&data->philo[data->init_cnt].thread_id, NULL, &routine,
+				&data->philo[data->init_cnt]) != 0)
 			return (1);
-		cnt++;
+		data->init_cnt++;
+		data->is_dead = 0;
 	}
 	return (0);
 }
