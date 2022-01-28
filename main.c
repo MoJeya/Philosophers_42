@@ -6,7 +6,7 @@
 /*   By: mjeyavat <mjeyavat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 16:48:16 by mjeyavat          #+#    #+#             */
-/*   Updated: 2022/01/28 18:05:34 by mjeyavat         ###   ########.fr       */
+/*   Updated: 2022/01/28 20:30:32 by mjeyavat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,14 @@ int	main(int argc, char *argv[])
 		write(2, "error\n", 6);
 		return (1);
 	}
-	creat_data(&data);
-	check_death(&data);
-	detach_threads(&data);
+	if (data.nb_of_phil == 1)
+		print_message(&data, "is Dead!", 0);
+	else
+	{
+		creat_data(&data);
+		check_death(&data);	
+		detach_threads(&data);
+	}
 	free_thread(&data);
 	return (0);
 }

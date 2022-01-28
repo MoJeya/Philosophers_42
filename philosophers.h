@@ -6,7 +6,7 @@
 /*   By: mjeyavat <mjeyavat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 15:30:06 by mjeyavat          #+#    #+#             */
-/*   Updated: 2022/01/28 19:14:59 by mjeyavat         ###   ########.fr       */
+/*   Updated: 2022/01/28 20:20:21 by mjeyavat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-# define INT_MAX 2147483647
+# define INT_MAX 2147483645
 
 typedef struct s_data
 {
