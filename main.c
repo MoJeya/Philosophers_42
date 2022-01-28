@@ -6,7 +6,7 @@
 /*   By: mjeyavat <mjeyavat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 16:48:16 by mjeyavat          #+#    #+#             */
-/*   Updated: 2022/01/27 18:53:58 by mjeyavat         ###   ########.fr       */
+/*   Updated: 2022/01/28 18:05:34 by mjeyavat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	main(int argc, char *argv[])
 	}
 	creat_data(&data);
 	check_death(&data);
-	join_threads(&data);
+	detach_threads(&data);
 	free_thread(&data);
 	return (0);
 }

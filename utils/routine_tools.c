@@ -6,7 +6,7 @@
 /*   By: mjeyavat <mjeyavat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 17:51:32 by mjeyavat          #+#    #+#             */
-/*   Updated: 2022/01/27 17:17:52 by mjeyavat         ###   ########.fr       */
+/*   Updated: 2022/01/28 19:10:15 by mjeyavat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ void	eat(int id, t_data *data)
 		pthread_mutex_lock(&data->philo[id].fork);
 		print_message(data, "has taken a fork", id);
 	}
-	data->philo[id].last_meal = timestamp();
 	data->philo[id].meals++;
+	data->philo[id].last_meal = timestamp();
 	print_message(data, "is eating", id);
 	ft_ms_sleep(data->time_to_eat);
 	pthread_mutex_unlock(&data->philo[id].fork);
@@ -41,8 +41,8 @@ void	eat(int id, t_data *data)
 
 void	take_nap(t_data *data, int id)
 {
-	ft_ms_sleep(data->time_to_sleep);
 	print_message(data, "is sleeping", id);
+	ft_ms_sleep(data->time_to_sleep);
 }
 
 void	think(t_data *data, int id)

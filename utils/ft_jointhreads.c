@@ -6,13 +6,13 @@
 /*   By: mjeyavat <mjeyavat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 19:02:20 by mjeyavat          #+#    #+#             */
-/*   Updated: 2022/01/27 16:58:45 by mjeyavat         ###   ########.fr       */
+/*   Updated: 2022/01/28 17:42:54 by mjeyavat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philosophers.h"
 
-int	join_threads(t_data *data)
+int	detach_threads(t_data *data)
 {
 	int	cnt;
 

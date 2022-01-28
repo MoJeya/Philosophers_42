@@ -6,7 +6,7 @@
 /*   By: mjeyavat <mjeyavat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 22:47:01 by mjeyavat          #+#    #+#             */
-/*   Updated: 2022/01/27 19:16:43 by mjeyavat         ###   ########.fr       */
+/*   Updated: 2022/01/28 19:15:06 by mjeyavat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	kill_all(t_data *data, int id)
 {
 	print_message(data, "is Dead!", id);
-	usleep(1000);
+	usleep(100);
 	data->is_dead = 1;
 	return (0);
 }
@@ -27,7 +27,7 @@ int	all_eaten(t_data *data, int id)
 	if (data->meals_eaten == data->meals_to_eat)
 	{
 		usleep(100);
-		print_message(data, "Everyone has eaten!", id);
+		print_message(data, "Everyone has eaten!", -1);
 		data->is_running = 1;
 		return (0);
 	}
@@ -41,6 +41,8 @@ void	*death_loop(void *arg)
 
 	data = (t_data *)arg;
 	i = 0;
+	if (data->meals_to_eat == -1)
+		data->meals_to_eat = INT_MAX;
 	while (1)
 	{
 		if (data->philo[i].last_meal > 0

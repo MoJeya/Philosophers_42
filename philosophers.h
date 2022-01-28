@@ -6,7 +6,7 @@
 /*   By: mjeyavat <mjeyavat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 15:30:06 by mjeyavat          #+#    #+#             */
-/*   Updated: 2022/01/27 15:22:33 by mjeyavat         ###   ########.fr       */
+/*   Updated: 2022/01/28 19:14:59 by mjeyavat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <pthread.h>
 # include <unistd.h>
 # include <stdlib.h>
+
+# define INT_MAX 2147483647
 
 typedef struct s_data
 {
@@ -51,7 +53,7 @@ struct	s_philo
 int						ft_atoi(const char *str);
 void					*routine(void *arg);
 int						creat_data(t_data *data);
-int						join_threads(t_data *data);
+int						detach_threads(t_data *data);
 long					timestamp(void);
 int						check_death(t_data *data);
 void					ft_ms_sleep(long time_ms);

@@ -6,7 +6,7 @@
 /*   By: mjeyavat <mjeyavat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 17:26:54 by mjeyavat          #+#    #+#             */
-/*   Updated: 2022/01/27 16:53:40 by mjeyavat         ###   ########.fr       */
+/*   Updated: 2022/01/28 18:00:53 by mjeyavat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,15 @@
 // 	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 // }
 
-long    timestamp(void)
+long	timestamp(void)
 {
-    struct timeval  tp;
-    long            milliseconds;
-    gettimeofday(&tp, NULL);
-    milliseconds = tp.tv_sec * 1000;
-    milliseconds += tp.tv_usec / 1000;
-    return (milliseconds);
+	struct timeval  tp;
+	long            milliseconds;
+
+	gettimeofday(&tp, NULL);
+	milliseconds = tp.tv_sec * 1000;
+	milliseconds += tp.tv_usec / 1000;
+	return (milliseconds);
 }
 
 void	ft_ms_sleep(long time_ms)
@@ -46,7 +47,9 @@ void	ft_ms_sleep(long time_ms)
 void	print_message(t_data *data, char *status, int id)
 {
 	pthread_mutex_lock(&data->status);
-	if (data->is_running == 0 || data->is_dead == 0)
+	if (id == -1)
+		printf("%ld %s\n", (timestamp() - data->start), status);
+	else
 	{
 		printf("%ld %d %s\n", (timestamp() - data->start),
 			id + 1, status);
