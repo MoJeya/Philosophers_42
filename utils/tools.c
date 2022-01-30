@@ -6,24 +6,16 @@
 /*   By: mjeyavat <mjeyavat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 17:26:54 by mjeyavat          #+#    #+#             */
-/*   Updated: 2022/01/28 18:00:53 by mjeyavat         ###   ########.fr       */
+/*   Updated: 2022/01/30 16:16:41 by mjeyavat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philosophers.h"
 
-// unsigned long	timestamp(void)
-// {
-// 	struct timeval	tv;
-
-// 	gettimeofday(&tv, NULL);
-// 	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
-// }
-
 long	timestamp(void)
 {
-	struct timeval  tp;
-	long            milliseconds;
+	struct timeval	tp;
+	long			milliseconds;
 
 	gettimeofday(&tp, NULL);
 	milliseconds = tp.tv_sec * 1000;

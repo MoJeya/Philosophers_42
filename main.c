@@ -6,7 +6,7 @@
 /*   By: mjeyavat <mjeyavat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 16:48:16 by mjeyavat          #+#    #+#             */
-/*   Updated: 2022/01/28 20:30:32 by mjeyavat         ###   ########.fr       */
+/*   Updated: 2022/01/30 16:31:36 by mjeyavat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 int	hndl_input(char **argv, int argc, t_data *data)
 {
 	printf("handle input start...\n");
-	if (argc  < 5 || data == NULL)
+	if (argc < 5 || data == NULL)
 		return (1);
 	else if (argc == 5)
-		data->meals_to_eat = -1;
+		data->meals_to_eat = INT_MAX;
 	else
 		data->meals_to_eat = ft_atoi(argv[5]);
 	data->nb_of_phil = ft_atoi(argv[1]);
@@ -34,7 +34,7 @@ int	hndl_input(char **argv, int argc, t_data *data)
 
 int	init_data(t_data *data)
 {
-	int				cnt;
+	int	cnt;
 
 	printf("inti start...\n");
 	pthread_mutex_init(&data->status, NULL);
@@ -70,7 +70,7 @@ int	main(int argc, char *argv[])
 	else
 	{
 		creat_data(&data);
-		check_death(&data);	
+		check_death(&data);
 		detach_threads(&data);
 	}
 	free_thread(&data);

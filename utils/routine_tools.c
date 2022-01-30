@@ -6,7 +6,7 @@
 /*   By: mjeyavat <mjeyavat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 17:51:32 by mjeyavat          #+#    #+#             */
-/*   Updated: 2022/01/28 20:19:05 by mjeyavat         ###   ########.fr       */
+/*   Updated: 2022/01/30 16:14:14 by mjeyavat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ void	*routine(void *arg)
 	philo->last_meal = timestamp();
 	while ((philo->data->meals_to_eat == -1
 			|| philo->meals < philo->data->meals_to_eat)
-				&& philo->data->is_dead == 0
-						&& philo->data->is_running == 0)
+		&& philo->data->is_dead == 0
+		&& philo->data->is_running == 0)
 	{
 		eat(philo->id, philo->data);
 		take_nap(philo->data, philo->id);
@@ -82,7 +82,8 @@ int	creat_data(t_data *data)
 	while (data->init_cnt < data->nb_of_phil)
 	{
 		data->philo[data->init_cnt].data = data;
-		if (pthread_create(&data->philo[data->init_cnt].thread_id, NULL, &routine,
+		if (pthread_create(&data->philo[data->init_cnt].thread_id,
+				NULL, &routine,
 				&data->philo[data->init_cnt]) != 0)
 			return (1);
 		data->init_cnt++;

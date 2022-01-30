@@ -14,3 +14,15 @@ The goal is that every Philosopher has to eat somthing to be keept alive, if the
 
 For more information -> [Subject](en.subject.pdf)
 
+### How to Run
+1.  clone git
+
+2. make project
+```
+make
+```
+3. execute with
+```
+./philo <number_of_philos> <time_to_die> <time_to_eat> <time_to_sleep> [OPTIONAL]<meals_to_eat>
+```
+

@@ -6,7 +6,7 @@
 /*   By: mjeyavat <mjeyavat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 22:47:01 by mjeyavat          #+#    #+#             */
-/*   Updated: 2022/01/28 20:17:30 by mjeyavat         ###   ########.fr       */
+/*   Updated: 2022/01/30 16:28:27 by mjeyavat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ void	*death_loop(void *arg)
 
 	data = (t_data *)arg;
 	i = 0;
-	if (data->meals_to_eat == -1)
-		data->meals_to_eat = INT_MAX;
 	while (1)
 	{
 		if (data->philo[i].last_meal > 0
@@ -58,9 +56,9 @@ void	*death_loop(void *arg)
 			data->is_running = 1;
 			return (0);
 		}
+		i++;
 		if (i == data->nb_of_phil)
 			i = 0;
-		i++;
 	}
 	return (NULL);
 }
