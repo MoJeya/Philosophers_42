@@ -5,7 +5,7 @@
 A Thread is a light-weight process, they are not indeppendent from each other as a result they share thier code section with other threads, but like processes a thread has it's own programm counter, a register set, and a stack space. 
 As written in [GeekforGeeks](https://www.geeksforgeeks.org/multithreading-c-2/)
 
-### Waht is the "Dining Philosopher's" problem
+### What is the "Dining Philosopher's" problem
 There are x amount of Philosophers sitting at a round table. Everyone of them has a fork, but they need two Forks for eating. That means if on philosopher wants to eat they have to take the second fork right next to him. So if n'th philosopher eats then n+1 and n_x cant eat.
 
 ![Image](img/200px-Dining_philosophers.png)
