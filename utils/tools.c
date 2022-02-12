@@ -6,11 +6,11 @@
 /*   By: mjeyavat <mjeyavat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 17:26:54 by mjeyavat          #+#    #+#             */
-/*   Updated: 2022/01/30 16:16:41 by mjeyavat         ###   ########.fr       */
+/*   Updated: 2022/02/11 15:26:59 by mjeyavat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../philosophers.h"
+#include "../philo/philosophers.h"
 
 long	timestamp(void)
 {

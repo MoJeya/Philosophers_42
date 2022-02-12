@@ -6,11 +6,11 @@
 /*   By: mjeyavat <mjeyavat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 17:51:32 by mjeyavat          #+#    #+#             */
-/*   Updated: 2022/01/30 16:14:14 by mjeyavat         ###   ########.fr       */
+/*   Updated: 2022/02/12 15:06:06 by mjeyavat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../philosophers.h"
+#include "../philo/philosophers.h"
 
 void	eat(int id, t_data *data)
 {
@@ -76,9 +76,11 @@ void	*routine(void *arg)
 	return (NULL);
 }
 
-int	creat_data(t_data *data)
+int	 creat_data(t_data *data)
 {
 	data->init_cnt = 0;
+	data->is_dead = 0;
+	data->is_running = 0;
 	while (data->init_cnt < data->nb_of_phil)
 	{
 		data->philo[data->init_cnt].data = data;
@@ -87,7 +89,6 @@ int	creat_data(t_data *data)
 				&data->philo[data->init_cnt]) != 0)
 			return (1);
 		data->init_cnt++;
-		data->is_dead = 0;
 	}
 	return (0);
 }

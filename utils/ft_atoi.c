@@ -6,11 +6,11 @@
 /*   By: mjeyavat <mjeyavat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 16:52:57 by mjeyavat          #+#    #+#             */
-/*   Updated: 2022/01/26 21:04:49 by mjeyavat         ###   ########.fr       */
+/*   Updated: 2022/02/11 15:27:18 by mjeyavat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../philosophers.h"
+#include "../philo/philosophers.h"
 
 int	ft_atoi(const char *str)
 {

@@ -6,17 +6,20 @@
 /*   By: mjeyavat <mjeyavat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 22:47:01 by mjeyavat          #+#    #+#             */
-/*   Updated: 2022/01/30 16:28:27 by mjeyavat         ###   ########.fr       */
+/*   Updated: 2022/02/12 15:30:43 by mjeyavat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../philosophers.h"
+#include "../philo/philosophers.h"
 
 int	kill_all(t_data *data, int id)
 {
-	print_message(data, "is Dead!", id);
+	pthread_mutex_lock(&data->status); //<-this is fix.
 	usleep(100);
+	printf("%ld %d %s\n", (timestamp() - data->start),
+			id + 1, "is Dead!");
 	data->is_dead = 1;
+	usleep(500000); //-> this fixed it 
 	return (0);
 }
 
